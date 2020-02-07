@@ -1,0 +1,27 @@
+*, *::before, *::after {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+
+}
+
+html {
+    text-align: center;
+    padding-top: 50px;
+}
+
+.search-song {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.search-box {
+    width: 400px;
+    text-align: center;
+    margin: 20px 0;
+}
+
+.search-btn {
+    width: 200px;
+}
