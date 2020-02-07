@@ -13,14 +13,17 @@
     <main>
         <form class="search-song">
             <input type="search" class="search-box" placeholder="Search by Artist, Song, or fragment of lyrics.">
-            <input type="submit" class="search-btn" value="search">
+            <input type="submit" class="search-btn" value="search" required>
         </form>
         <div class="search-results" id="top-artists"></div>
         <div class="lyrics"></div>
-        <div class="player"></div>
+        <div class="player">
+            <button id="playpause">Pause</button>
+        </div>
     </main>
-    <!-- <script src="https://sdk.scdn.co/spotify-player.js"></script> -->
+    <script src="https://sdk.scdn.co/spotify-player.js"></script>
     <script src="JS/jQuery.JS"></script>
     <script src="JS/index.JS"></script>
+    <script src="JS/spotify.JS"></script>
 </body>
 </html>

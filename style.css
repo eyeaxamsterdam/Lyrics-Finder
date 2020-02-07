@@ -25,3 +25,12 @@ html {
 .search-btn {
     width: 200px;
 }
+
+ul {
+    list-style-type: none;
+}
+
+button {
+    margin: 100px;
+    padding: 40px;
+}

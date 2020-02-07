@@ -19,6 +19,9 @@ window.location.hash = '';
 
 // Set token
 let _token = hash.access_token;
+console.log(_token);
+
+
 
 const authEndpoint = 'https://accounts.spotify.com/authorize';
 
@@ -26,7 +29,7 @@ const authEndpoint = 'https://accounts.spotify.com/authorize';
 const clientId = 'aafde63513c44f8c9f558c75a05a6612';
 const redirectUri = 'http://127.0.0.1:5500/index.html';
 const scopes = [
-  'user-top-read', 'user-read-currently-playing',
+    "streaming", "user-read-email", "user-read-private"
 ];
 
 // If there is no token, redirect to Spotify authorization
@@ -35,29 +38,31 @@ if (!_token) {
 }
 
 // Make a call using the token
-$.ajax({
-   url: "https://api.spotify.com/v1/me/player/currently-playing",
-   type: "GET",
-   beforeSend: function(xhr){xhr.setRequestHeader('Authorization', 'Bearer ' + _token );},
-   success: function(data) {
-       let songName=data.item.name;
-       let artistName=data.item.artists[0].name;
-       console.log(songName);
-       console.log(artistName);
-       $(`<li>${songName} - ${artistName}</li>`).appendTo('.search-results')
-     // Do something with the returned data
-   }
-});
-
+function searchtrack(song) {
+    $.ajax({
+        url: `https://api.spotify.com/v1/search?q=${song}&type=track`,
+        type: "GET",
+        beforeSend: function(xhr){xhr.setRequestHeader('Authorization', 'Bearer ' + _token );},
+        success: function(data) {
+            console.log(data.tracks);
+            for (let i=0; i<data.tracks.items.length; i++) {
+                let songName=data.tracks.items[i].name;
+                let artistName=data.tracks.items[i].artists[0].name;
+                console.log(songName);
+                console.log(artistName);
+                $(`<p>${songName} - ${artistName}</p>`).appendTo('.search-results')
+            }
+        }
+    });
+}
 
 
 $('.search-btn').on('click', e => {
     e.preventDefault();
+    $('.search-results').empty();
     let song = $('.search-box').val();
-    $('.search-results').html(`<ul>
-        <li>Look what you did!</li>
-        <li>${song}</li>
-        <li>
-        </ul>`);
-
+    searchtrack(song);
+    console.log('hello');
 });
+
+
