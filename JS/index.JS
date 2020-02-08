@@ -49,7 +49,7 @@ function searchtrack(song) {
                 let artistName=data.tracks.items[i].artists[0].name;
                 let songid=data.tracks.items[i].id;
                 console.log(songid, songName, artistName);
-                $(`<p class="selection-number${[i+1]}" id="${songid}">${songName} - ${artistName}</p>`).appendTo('.search-results');
+                $(`<p class="selection selection-number${[i+1]}" id="${songid}"><span class="song-name">${songName}</span> - <span class="artist-name">${artistName}</span></p>`).appendTo('.search-results');
                 $(`.selection-number${[i+1]}`).click(function() {
                     console.log(this.id);
                     $.ajax({
@@ -66,8 +66,24 @@ function searchtrack(song) {
                         })
                     });
                 });
-
             }
+            $('.selection').click(function() {
+                console.log($('.artist-name').val());
+                var settings = {
+                    "async": true,
+                    "crossDomain": true,
+                    "url": `https://mourits-lyrics.p.rapidapi.com/?artist=${this.artist-name.val()}&song=${this.song-name.val()}`,
+                    "method": "GET",
+                    "headers": {
+                        "x-rapidapi-host": "mourits-lyrics.p.rapidapi.com",
+                        "x-rapidapi-key": "f0497e7254msh5979c0d4aa26a9fp1fe3b5jsnae9c17b187da"
+                    }
+                }
+                
+                $.ajax(settings).done(function (response) {
+                    $('.lyrics').html(response.result.lyrics);
+                });
+            });
 
         }
     });

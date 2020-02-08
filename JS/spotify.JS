@@ -27,7 +27,7 @@
         getOAuthToken(access_token => {
           fetch(`https://api.spotify.com/v1/me/player/play?device_id=${id}`, {
             method: 'PUT',
-            /* body: JSON.stringify({ uris: [spotify_uri] }), */
+            body: JSON.stringify({ uris: [spotify_uri] }),
             headers: {
               'Content-Type': 'application/json',
               'Authorization': `Bearer ${access_token}`
@@ -38,7 +38,7 @@
 
       play({
         playerInstance: player,
-        spotify_uri: 'spotify:track:2g4LWy7YxrbWYA2RJP8nFk'
+        spotify_uri: 'spotify:track:5V3b2UB9tCAHuqXj2b2EP7'
       });
     });
 
