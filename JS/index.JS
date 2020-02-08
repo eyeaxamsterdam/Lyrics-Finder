@@ -51,19 +51,7 @@ function searchtrack(song) {
                 console.log(songid, songName, artistName);
                 $(`<p class="selection-number${[i+1]}" id="${songid}">${songName} - ${artistName}</p>`).appendTo('.search-results');
                 $(`.selection-number${[i+1]}`).click(function() {
-
                     console.log(this.id);
-                    $.ajax({
-                        url: 'https://api.spotify.com/v1/me/player',
-                        type: 'PUT',
-                        headers: {
-                          'Authorization': `Bearer ${_token}`
-                        },
-                        device_ids:['519cd79dca85a36d01cc67eac1bd23772d72004e'],
-                        dataType: "json",
-                        contentType: "application/json",
-                        play: true
-                    });
                     $.ajax({
                         url: 'https://api.spotify.com/v1/me/player/play',
                         type: 'PUT',
