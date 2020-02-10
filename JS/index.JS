@@ -5,37 +5,6 @@ Client ID aafde63513c44f8c9f558c75a05a6612
 Client Secret ad4b9a6c8e6943179a2f6499727cc123*/
 
 
-const hash = window.location.hash
-.substring(1)
-.split('&')
-.reduce(function (initial, item) {
-  if (item) {
-    var parts = item.split('=');
-    initial[parts[0]] = decodeURIComponent(parts[1]);
-  }
-  return initial;
-}, {});
-window.location.hash = '';
-
-// Set token
-let _token = hash.access_token;
-console.log(_token);
-
-
-const authEndpoint = 'https://accounts.spotify.com/authorize';
-
-// Replace with your app's client ID, redirect URI and desired scopes
-const clientId = 'aafde63513c44f8c9f558c75a05a6612';
-const redirectUri = 'http://127.0.0.1:5500/index.html';
-const scopes = [
-    "streaming", "user-read-email", "user-read-private", "user-modify-playback-state"
-];
-
-// If there is no token, redirect to Spotify authorization
-if (!_token) {
-  window.location = `${authEndpoint}?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scopes.join('%20')}&response_type=token&show_dialog=true`;
-}
-
 // Make a call using the token
 function searchtrack(song) {
     $.ajax({
@@ -65,26 +34,16 @@ function searchtrack(song) {
                             "uris": [`spotify:track:${this.id}`]
                         })
                     });
+                    fetch(`https://orion.apiseeds.com/api/music/lyric/${artistName}/${songName}?apikey=IMhMN29mkSHK4OfQsxWIUwylijoGFLTduAvZZH5uQR2IAfMVmsbTuXwhdyBuPmch`)
+                    .then((response) => {
+                        return response.json();
+                      })
+                      .then((myJson) => {
+                          console.log(myJson.result.track.text);
+                          $('.lyrics').html(`${myJson.result.track.text}`);
+                      });
                 });
             }
-            $('.selection').click(function() {
-                console.log($('.artist-name').val());
-                var settings = {
-                    "async": true,
-                    "crossDomain": true,
-                    "url": `https://mourits-lyrics.p.rapidapi.com/?artist=${this.artist-name.val()}&song=${this.song-name.val()}`,
-                    "method": "GET",
-                    "headers": {
-                        "x-rapidapi-host": "mourits-lyrics.p.rapidapi.com",
-                        "x-rapidapi-key": "f0497e7254msh5979c0d4aa26a9fp1fe3b5jsnae9c17b187da"
-                    }
-                }
-                
-                $.ajax(settings).done(function (response) {
-                    $('.lyrics').html(response.result.lyrics);
-                });
-            });
-
         }
     });
 }

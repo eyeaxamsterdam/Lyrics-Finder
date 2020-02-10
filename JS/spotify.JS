@@ -1,3 +1,35 @@
+const hash = window.location.hash
+.substring(1)
+.split('&')
+.reduce(function (initial, item) {
+  if (item) {
+    var parts = item.split('=');
+    initial[parts[0]] = decodeURIComponent(parts[1]);
+  }
+  return initial;
+}, {});
+window.location.hash = '';
+
+// Set token
+let _token = hash.access_token;
+console.log(_token);
+
+
+const authEndpoint = 'https://accounts.spotify.com/authorize';
+
+// Replace with your app's client ID, redirect URI and desired scopes
+const clientId = 'aafde63513c44f8c9f558c75a05a6612';
+const redirectUri = 'http://127.0.0.1:5500/index.html';
+const scopes = [
+    "streaming", "user-read-email", "user-read-private", "user-modify-playback-state"
+];
+
+// If there is no token, redirect to Spotify authorization
+if (!_token) {
+  window.location = `${authEndpoint}?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scopes.join('%20')}&response_type=token&show_dialog=true`;
+}
+ 
+ 
  // Called when the Spotify Web Playback SDK is ready to use
  window.onSpotifyWebPlaybackSDKReady = () => {
 
