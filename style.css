@@ -34,3 +34,24 @@ button {
     margin: 100px;
     padding: 40px;
 }
+
+.search-results {
+    max-width: 540px;
+    margin: 20px auto;
+    text-align: center;
+}
+
+.selection {
+    margin: 10px 0;
+}
+
+.selection:hover {
+    cursor: pointer;
+    background-color: grey;
+}
+
+.lyrics {
+    max-width: 720px;
+    text-align: left;
+    margin: 45px auto;
+}
