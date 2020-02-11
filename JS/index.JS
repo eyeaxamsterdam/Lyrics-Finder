@@ -57,19 +57,28 @@ $('.search-btn').on('click', e => {
 });
 
 
-/* $('#playpause').on('click', e => {
+$('#playpause').click(e => {
     e.preventDefault();
-    console.log("hello");
+    console.log("paused", $(this));
     $.ajax({
-        url: 'https://api.spotify.com/v1/me/player',
+        url: 'https://api.spotify.com/v1/me/player/pause',
         type: 'PUT',
         headers: {
           'Authorization': `Bearer ${_token}`
         },
         device_ids:['519cd79dca85a36d01cc67eac1bd23772d72004e'],
-        dataType: "json",
-        contentType: "application/json",
-        play: "true"
+    });
+});
+/* 
+$('.pause').on('click', e => {
+    e.preventDefault();
+    $.ajax({
+        url: 'https://api.spotify.com/v1/me/player/play',
+        type: 'PUT',
+        headers: {
+          'Authorization': `Bearer ${_token}`
+        },
+        device_ids:['519cd79dca85a36d01cc67eac1bd23772d72004e'],
     });
 });
  */

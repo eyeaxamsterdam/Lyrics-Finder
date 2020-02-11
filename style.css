@@ -19,7 +19,9 @@ html {
 .search-box {
     width: 400px;
     text-align: center;
-    margin: 20px 0;
+    margin: 25px 0;
+    border-radius: 5px;
+    height: 25px;
 }
 
 .search-btn {
@@ -32,7 +34,8 @@ ul {
 
 button {
     margin: 100px;
-    padding: 40px;
+    padding: 20px;
+    border-radius: 15px;
 }
 
 .search-results {
