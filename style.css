@@ -1,60 +1,76 @@
-*, *::before, *::after {
-    box-sizing: border-box;
-    padding: 0;
-    margin: 0;
-
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
 }
+
 
 html {
-    text-align: center;
-    padding-top: 50px;
+  text-align: center;
+  padding-top: 50px;
 }
+
 
 .search-song {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
+
 
 .search-box {
-    width: 400px;
-    text-align: center;
-    margin: 25px 0;
-    border-radius: 5px;
-    height: 25px;
+  width: 400px;
+  text-align: center;
+  margin: 25px 0;
+  border-radius: 5px;
+  height: 25px;
 }
+
 
 .search-btn {
-    width: 200px;
+  width: 200px;
 }
+
 
 ul {
-    list-style-type: none;
+  list-style-type: none;
 }
+
 
 button {
-    margin: 100px;
-    padding: 20px;
-    border-radius: 15px;
+  margin: 100px;
+  padding: 20px;
+  border-radius: 15px;
 }
+
 
 .search-results {
-    max-width: 540px;
-    margin: 20px auto;
-    text-align: center;
+  max-width: 540px;
+  margin: 20px auto;
+  text-align: center;
+  font-family: Arial, Helvetica, sans-serif;
 }
+
 
 .selection {
-    margin: 10px 0;
+  margin: 10px 0;
 }
+
 
 .selection:hover {
-    cursor: pointer;
-    background-color: grey;
+  cursor: pointer;
+  background-color: grey;
 }
 
+
 .lyrics {
-    max-width: 720px;
-    text-align: left;
-    margin: 45px auto;
+  max-width: 720px;
+  text-align: left;
+  margin: 45px auto;
+  white-space: pre-line;
+  width: 200px;
+  margin: 0 auto;
+  font-size: 20px;
 }
