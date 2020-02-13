@@ -11,7 +11,13 @@
     <header>
       <h1>Find Lyrics</h1>
       <h2>Search for a song below</h2>
-      <h3>Selected song will play. There is a pause button at the bottom.</h3>
+      <form
+        action="https://eyeaxamsterdam.github.io/API-Hack-Capstone/"
+        method="get"
+      >
+        <button type="submit">Connect Wtih Spotify!</button>
+      </form>
+      <p>(premium users only)</p>
     </header>
     <main>
       <form class="search-song">
@@ -24,12 +30,8 @@
       </form>
       <div class="search-results" id="top-artists"></div>
       <div class="lyrics"></div>
-      <div class="player">
-        <button class="play" id="playpause">Pause</button>
-      </div>
     </main>
     <script src="JS/jQuery.JS"></script>
-    <script src="https://sdk.scdn.co/spotify-player.js"></script>
     <script src="JS/index.JS"></script>
     <script src="JS/spotify.JS"></script>
   </body>

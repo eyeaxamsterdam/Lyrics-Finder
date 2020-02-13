@@ -22,7 +22,6 @@ function displayTitles(data) {
     let songName = data.tracks.items[i].name;
     let artistName = data.tracks.items[i].artists[0].name;
     let songid = data.tracks.items[i].id;
-
     $(
       `<p class="selection selection-number" id="${songid}"><span class="song-name">${songName}</span> - <span class="artist-name">${artistName}</span></p>`
     ).appendTo(".search-results");
@@ -31,20 +30,6 @@ function displayTitles(data) {
 
 function checkForLyrics() {
   $(`.search-results`).on("click", ".selection-number", function() {
-    $.ajax({
-      url: "https://api.spotify.com/v1/me/player/play",
-      type: "PUT",
-      headers: {
-        Authorization: `Bearer ${_token}`
-      },
-      device_ids: ["519cd79dca85a36d01cc67eac1bd23772d72004e"],
-      dataType: "json",
-      contentType: "application/json",
-      data: JSON.stringify({
-        uris: [`spotify:track:${this.id}`]
-      })
-    });
-
     const artistName = $(this)
       .find(".artist-name")
       .text();
@@ -75,31 +60,5 @@ $(".search-btn").on("click", e => {
   let song = $(".search-box").val();
   searchtrack(song);
 });
-
-$("#playpause").click(e => {
-  e.preventDefault();
-  console.log("paused", $(this));
-  $.ajax({
-    url: "https://api.spotify.com/v1/me/player/pause",
-    type: "PUT",
-    headers: {
-      Authorization: `Bearer ${_token}`
-    },
-    device_ids: ["519cd79dca85a36d01cc67eac1bd23772d72004e"]
-  });
-});
-/* 
-$('.pause').on('click', e => {
-    e.preventDefault();
-    $.ajax({
-        url: 'https://api.spotify.com/v1/me/player/play',
-        type: 'PUT',
-        headers: {
-          'Authorization': `Bearer ${_token}`
-        },
-        device_ids:['519cd79dca85a36d01cc67eac1bd23772d72004e'],
-    });
-});
- */
 
 $(checkForLyrics);
