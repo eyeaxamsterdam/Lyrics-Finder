@@ -1,38 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Lyrics Finder</title>
-    <link rel="stylesheet" href="style.css" />
-  </head>
-  <body>
-    <header>
-      <h1>Find Lyrics</h1>
-      <h2>Search for a song below</h2>
-      <form
-        action="https://eyeaxamsterdam.github.io/API-Hack-Capstone/"
-        method="get"
-      >
-        <button type="submit">Connect Wtih Spotify!</button>
-      </form>
-      <p>(premium users only)</p>
-    </header>
-    <main>
-      <form class="search-song">
-        <input
-          type="search"
-          class="search-box"
-          placeholder="Search by Artist, or Song."
-        />
-        <input type="submit" class="search-btn" value="search" required />
-      </form>
-      <div class="search-results"></div>
-      <div class="lyrics"></div>
-    </main>
-    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-    <script src="JS/index.JS"></script>
-  </body>
-</html>
 
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Lyrics Finder</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <header>
+    <h1>Find Lyrics</h1>
+    <h2>Search for a song below</h2>
+  </header>
+  <main>
+
+    <form class="search-song" id="target" action="#">
+      <input type="search" class="search-box" placeholder="Search by Artist, or Song." required aria-label="Search by Artist, or Song">
+      <input type="submit" class="search-btn" value="search" aria-label="Search Button" />
+    </form>
+    <div class="search-results"></div>
+    <div class="lyrics"></div>
+  </main>
+  <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+  <script src="JS/index.JS"></script>
+</body>
+</html>
