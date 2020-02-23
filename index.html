@@ -11,16 +11,15 @@
 
 <body>
   <header>
-    <h1>Find Lyrics</h1>
-    <h2>Search for a song below</h2>
+    <h1>Lyrics Finder</h1>
   </header>
   <main>
 
-    <form class="search-song" id="target" action="#">
+    <form class="search-song" action="#">
       <input type="search" class="search-box" placeholder="Search by Artist, or Song." required aria-label="Search by Artist, or Song">
       <input type="submit" class="search-btn" value="search" aria-label="Search Button" />
     </form>
-    <div class="search-results"></div>
+    <div class="search-results" id="target"></div>
     <div class="lyrics"></div>
   </main>
   <script src="https://code.jquery.com/jquery-3.4.1.js"></script>

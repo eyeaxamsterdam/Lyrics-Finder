@@ -1,14 +1,18 @@
+let poop = $(".search-box").val();
+
 function searchtrack(song) {
-  $('.search-results').show();
   fetch(`https://itunes.apple.com/search?term=${song}`, { method: "POST" })
     .then(res => res.json())
     .then(displayTitles)
     .catch(err => alert(err));
+    $('.search-results').html(`<h2 class="result-head">Search results for "${song}"</h2>`);
 }
 
 function displayTitles(data) {
+  $('.search-results').show();
   if ($(".search-box").val()==""){} 
   else if (data.results.length) {
+    $('.search-box').val('').attr('placeholder', 'Search by Artist, or Song.');
     for (let i = 0; i < data.results.length; i++) {
       let artwork = data.results[i].artworkUrl100;
       let songName = data.results[i].trackName;
@@ -23,15 +27,16 @@ function displayTitles(data) {
           </a>`
       ).appendTo(".search-results");
     }
+    $(`<a class="backtotop" href="#target">back to the top</a>`).appendTo('.search-results');
     $( ".selection" ).hover((e) => {
         $(e.target).find('.albumartwork').css("opacity", "100%" );
         $(e.target).find('.artist-name').css("opacity", "100%");
       }, (e) => {
-        $(e.target).find('.albumartwork').css( "text-decoration", "underline" );
+        $(e.target).find('.albumartwork').css("opacity", "50%")
       }
     )
-    .focus(e =>$(e.target).find('.albumartwork').css("opacity", "100%" ))
-    .focusout(e => $(e.target).find('.albumartwork').css( "opacity", "60%" ));
+    .focus(e => $(e.target).find('.albumartwork').css("opacity", "100%" ))
+    .focusout(e => $(e.target).find('.albumartwork').css( "opacity", "50%" ));
   } else {
     $(".search-results").append('<h3>Can\'t find any results. <br/>Please check spelling and try again.</h3>');
   }
@@ -39,7 +44,6 @@ function displayTitles(data) {
 
 function checkForLyrics() {
   $(`.search-results`).on("click", ".selection", function() {
-    $('.search-box').val('').attr('placeholder', 'Search by Artist, or Song.');
     $('.lyrics').show();
     const artistName = $(this)
       .find(".artist-name")
@@ -59,12 +63,12 @@ function checkForLyrics() {
       })
       .then(myJson => {
         $(".lyrics").html(
-          `<div class="centerleft">${myJson.result.track.text}</div>
-          <div class="backbutton">
+          `<h2 class='result-header'>${myJson.result.track.name}</h2>
+          <h2 class='result-header'>By ${myJson.result.artist.name}</h2>
+          <div class="centerleft">${myJson.result.track.text}</div>
             <a href="#target" class="anchor">
               <button class="backtoresults">Back to previous results</button>
-            </a>
-          </div>`
+            </a>`
         );
         $('.backbutton .anchor').click(() => {
           $('.search-results').show();
@@ -83,12 +87,13 @@ function checkForLyrics() {
 $(".search-btn").on("click", () => {
   if ($('.search-box').val()=="") {}
   else {
-    $(".search-results, .lyrics").empty();
     let song = $(".search-box").val();
+    $(".search-results, .lyrics").empty();
     searchtrack(song);
   }
 });
 
-
-
 $(checkForLyrics);
+
+/* clicking selection brings you right to lyrics not top */
+/* lyrics not centered properly */
