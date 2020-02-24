@@ -1,4 +1,4 @@
-let poop = $(".search-box").val();
+"use strict";
 
 function searchtrack(song) {
   fetch(`https://itunes.apple.com/search?term=${song}`, { method: "POST" })
@@ -18,7 +18,7 @@ function displayTitles(data) {
       let songName = data.results[i].trackName;
       let artistName = data.results[i].artistName;
       $(
-        `<a class="selection" href="#">
+        `<a class="selection" href="#result-header">
             <img class="albumartwork" src="${artwork}" alt="album artwork">
             <div class="names">
               <span class="song-name">${songName}</span>
@@ -28,17 +28,22 @@ function displayTitles(data) {
       ).appendTo(".search-results");
     }
     $(`<a class="backtotop" href="#target">back to the top</a>`).appendTo('.search-results');
-    $( ".selection" ).hover((e) => {
+    if ($(window).width() >= 800) {
+      $( ".selection" ).hover((e) => {
         $(e.target).find('.albumartwork').css("opacity", "100%" );
         $(e.target).find('.artist-name').css("opacity", "100%");
       }, (e) => {
-        $(e.target).find('.albumartwork').css("opacity", "50%")
+        $(e.target).find('.albumartwork').css("opacity", "50%");
+        $(e.target).find('.artist-name').css("opacity", "50%")
       }
     )
-    .focus(e => $(e.target).find('.albumartwork').css("opacity", "100%" ))
-    .focusout(e => $(e.target).find('.albumartwork').css( "opacity", "50%" ));
-  } else {
-    $(".search-results").append('<h3>Can\'t find any results. <br/>Please check spelling and try again.</h3>');
+      .focus(e => $(e.target).find('.albumartwork').css("opacity", "100%" ))
+      .focusout(e => $(e.target).find('.albumartwork').css( "opacity", "50%" ));
+    }
+    else {}
+  } 
+  else {
+    $(".search-results").append('<h3 class="red">Can\'t find any results. <br/>Please check spelling and try again.</h3>');
   }
 }
 
@@ -63,24 +68,24 @@ function checkForLyrics() {
       })
       .then(myJson => {
         $(".lyrics").html(
-          `<h2 class='result-header'>${myJson.result.track.name}</h2>
-          <h2 class='result-header'>By ${myJson.result.artist.name}</h2>
+          `<h2><span class='italics'>${myJson.result.track.name} </span>By ${myJson.result.artist.name}</h2>
           <div class="centerleft">${myJson.result.track.text}</div>
             <a href="#target" class="anchor">
               <button class="backtoresults">Back to previous results</button>
             </a>`
         );
-        $('.backbutton .anchor').click(() => {
+        $('.backtoresults, .anchor').click(() => {
           $('.search-results').show();
           $('.lyrics').empty();
         });
       })
       .catch(err => {
-        $(".lyrics").html(`<span class="api-error">${err}</span><div><a href="#target"><button class="backtoresults">Back to previous results</button></a></button></div>`)
+        $(".lyrics").html(`<p class="api-error">${err} for <span class="italics">${songName}</span> by ${artistName}.</p><p>Try another selection.</p><a href="#target"><button class="backtoresults">Back to previous results</button></a></button>`)
         $('.backtoresults').click(() => {
           $('.search-results').show();
         });
       });
+      /* $("html, body").animate({ scrollTop: $("#result-header").scrollTop() }, 1000); */     
   });
 }
 
@@ -94,6 +99,3 @@ $(".search-btn").on("click", () => {
 });
 
 $(checkForLyrics);
-
-/* clicking selection brings you right to lyrics not top */
-/* lyrics not centered properly */
