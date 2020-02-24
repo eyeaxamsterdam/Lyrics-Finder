@@ -17,17 +17,17 @@ function displayTitles(data) {
       let artwork = data.results[i].artworkUrl100;
       let songName = data.results[i].trackName;
       let artistName = data.results[i].artistName;
-      $(
-        `<a class='selection' href='#result-header'>
-            <img class='albumartwork' src='${artwork}' alt='album artwork'>
-            <div class='names'>
-              <span class='song-name'>${songName}</span>
-              <span class='artist-name'>${artistName}</span>
-            </div>
-          </a>`
-      ).appendTo('.search-results');
+      $(`<a class='selection' href='#'>
+          <img class='albumartwork' src='${artwork}' alt='album artwork'>
+          <div class='names'>
+            <span class='song-name'>${songName}</span>
+            <span class='artist-name'>${artistName}</span>
+          </div>
+        </a>`)
+        .appendTo('.search-results'
+      );
     }
-    $(`<a class='backtotop' href='#target'>back to the top</a>`).appendTo('.search-results');
+    $(`<div class="line-break"></div><a class='backtotop' href='#target'>Back to the top</a>`).appendTo('.search-results');
     $('.search-box').val('').attr('placeholder', 'Search by Artist, or Song.');
     //no hover on mobile screns
     if ($(window).width() >= 800) {
@@ -42,7 +42,6 @@ function displayTitles(data) {
       .focus(e => $(e.target).find('.albumartwork').css('opacity', '100%' ))
       .focusout(e => $(e.target).find('.albumartwork').css( 'opacity', '50%' ));
     }
-   /*  else {} */
   } 
   else {
     $('.search-results').append("<h3 class='red'>Can't find any results. <br/>Please check spelling and try again.</h3>");
@@ -52,6 +51,7 @@ function displayTitles(data) {
 function checkForLyrics() {
   $(`.search-results`).on('click', '.selection', function() {
     $('.lyrics').show();
+    $('.back-btn').show();
     const artistName = $(this)
       .find('.artist-name')
       .text();
@@ -72,19 +72,29 @@ function checkForLyrics() {
         $('.lyrics').html(
           `<h2><span class='italics'>${myJson.result.track.name} </span>By ${myJson.result.artist.name}</h2>
           <div class='centerleft'>${myJson.result.track.text}</div>
-            <a href='#target' class='anchor'>
-              <button class='backtoresults'>Back to previous results</button>
-            </a>`
+          <div class='back-btn'>
+            <a href='#target' class='backtoresults'>
+             Back to previous results
+            </a>
+          </div>`
         );
-        $('.backtoresults, .anchor').click(() => {
+        $('.backtoresults').click(() => {
           $('.search-results').show();
-          $('.lyrics').empty();
+          $('.lyrics').empty().hide();
+         /*  $('.back-btn').empty(); */
         });
       })
       .catch(err => {
-        $('.lyrics').html(`<p class='api-error'>${err} for <span class='italics'>${songName}</span> by ${artistName}.</p><p>Try another selection.</p><a href='#target'><button class='backtoresults'>Back to previous results</button></a></button>`)
+        $('.lyrics').html(`<p class='api-error'>${err} for <span class='italics'>${songName}</span> by ${artistName}.</p>
+          <p>Try another selection.</p>`);
+        $('.back-btn').html(`
+          <a href='#target' class='backtoresults'>
+            Back to previous results
+          </a>`);        
         $('.backtoresults').click(() => {
           $('.search-results').show();
+          $('.lyrics').empty().hide();
+          $('.back-btn').empty();
         });
       });  
   });
@@ -92,9 +102,10 @@ function checkForLyrics() {
 
 
 
-$('.search-btn').on('click', () => {
+$('.search-btn').on('click', (e) => {
   if ($('.search-box').val()=='') {}
   else {
+    e.preventDefault();
     let song = $('.search-box').val();
     $('.search-results, .lyrics').empty();
     searchtrack(song);
