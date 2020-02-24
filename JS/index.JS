@@ -33,10 +33,10 @@ function displayTitles(data) {
     if ($(window).width() >= 800) {
       $( '.selection' ).hover((e) => {
         $(e.target).find('.albumartwork').css('opacity', '100%' );
-        $(e.target).find('.artist-name').css('opacity', '100%');
+        $(e.target).find('.artist-name').css('font-weight', 'bold');
       }, (e) => {
         $(e.target).find('.albumartwork').css('opacity', '50%');
-        $(e.target).find('.artist-name').css('opacity', '50%')
+        $(e.target).find('.artist-name').css('font-weight', 'normal')
       }
     )
       .focus(e => $(e.target).find('.albumartwork').css('opacity', '100%' ))
