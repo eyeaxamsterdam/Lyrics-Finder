@@ -141,7 +141,6 @@ body {
 }
 
 
-
 .centerleft {
   margin: 20px auto;
   text-align: left;
@@ -158,13 +157,14 @@ body {
 
 .italics {
   font-style: italic;
-  font-weight: 100;
+  font-weight: normal;
 }
 
 .red {
   color: red;
 }
 
+/* element below this on new line */
 .line-break {
   width: 100%;
 }

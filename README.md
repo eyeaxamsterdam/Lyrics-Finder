@@ -1,6 +1,6 @@
 Name: Lyrics Finder
 
-Live link: https://eyeaxamsterdam.github.io/API-Hack-Capstone-sans-Spotify/
+Live link: https://eyeaxamsterdam.github.io/Lyrics-Finder/
 
 <img src="Images/lyricfinder1.png" width="400">
 <img src="Images/lyricfinder2.png" width="400">

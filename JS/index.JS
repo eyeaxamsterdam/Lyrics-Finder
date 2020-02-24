@@ -1,6 +1,6 @@
 'use strict';
 
-//event listener at bottom start the app
+//event listener at bottom starts the app
 function searchtrack(song) {
   fetch(`https://itunes.apple.com/search?term=${song}`, { method: 'POST' })
     .then(res => res.json())
@@ -10,7 +10,7 @@ function searchtrack(song) {
 }
 
 function displayTitles(data) {
-  //show results again if back button is clicked
+  //show results again if 'backtoresults' button is clicked
   $('.search-results').show();
   if (data.results.length) {
     for (let i = 0; i < data.results.length; i++) {
@@ -81,7 +81,6 @@ function checkForLyrics() {
         $('.backtoresults').click(() => {
           $('.search-results').show();
           $('.lyrics').empty().hide();
-         /*  $('.back-btn').empty(); */
         });
       })
       .catch(err => {
@@ -103,6 +102,7 @@ function checkForLyrics() {
 
 
 $('.search-btn').on('click', (e) => {
+  
   if ($('.search-box').val()=='') {}
   else {
     e.preventDefault();
