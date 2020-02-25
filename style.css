@@ -66,11 +66,11 @@ body {
 }
 
 .selection {
+  display: flex;
+  justify-content: space-between;
   width: 80%;
   max-width: 300px;
   border: 1px solid black;
-  display: flex;
-  justify-content: space-between;
   margin: 7px;
   color: rgba(71, 255, 129, 0.616);
   text-decoration: none;  
@@ -89,6 +89,7 @@ body {
   justify-content: space-around;
   margin: 24px;
   width: 100%;
+  font-size: 18px;
 }
 
 .artist-name {
@@ -121,6 +122,7 @@ body {
   text-align: center;
   white-space: pre-line;
   padding: 50px 0 35px 0;
+  margin: 0 10px;
   font-size: 24px;
 }
 
@@ -139,7 +141,6 @@ body {
 }
 
 
-
 .centerleft {
   margin: 20px auto;
   text-align: left;
@@ -156,6 +157,7 @@ body {
 
 .italics {
   font-style: italic;
+<<<<<<< HEAD
   font-weight: 200;
   
 }
@@ -163,12 +165,16 @@ body {
 .thin {
   font-weight: 200;
   color: rgba(71, 255, 129, 0.616);
+=======
+  font-weight: normal;
+>>>>>>> f77376463299905bec9a1177ed7bf6c8098ecc65
 }
 
 .red {
   color: red;
 }
 
+/* element below this on new line */
 .line-break {
   width: 100%;
 }
