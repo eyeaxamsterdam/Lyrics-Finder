@@ -156,7 +156,13 @@ body {
 
 .italics {
   font-style: italic;
-  font-weight: 100;
+  font-weight: 200;
+  
+}
+
+.thin {
+  font-weight: 200;
+  color: rgba(71, 255, 129, 0.616);
 }
 
 .red {
