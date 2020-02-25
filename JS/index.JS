@@ -9,13 +9,8 @@ function searchtrack(song) {
     $('.search-results').html(`<h2 class='result-head'>Search results for '${song}'</h2>`);
 }
 
-<<<<<<< HEAD
 function checkTitles(data) {
-  //show results again if back button is clicked
-=======
-function displayTitles(data) {
   //show results again if 'backtoresults' button is clicked
->>>>>>> f77376463299905bec9a1177ed7bf6c8098ecc65
   $('.search-results').show();
   if (data.results.length) {
     displayTitles(data);
