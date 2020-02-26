@@ -105,9 +105,7 @@ function checkForLyrics() {
 
 
 $('.search-btn').on('click', (e) => {
-  
-  if ($('.search-box').val()=='') {}
-  else {
+  if ($('.search-box').val()!='') {
     e.preventDefault();
     let song = $('.search-box').val();
     $('.search-results, .lyrics').empty();
