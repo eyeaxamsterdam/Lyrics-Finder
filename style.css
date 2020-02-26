@@ -132,7 +132,7 @@ body {
 
 .backtoresults {
   text-decoration: none;
-  font-size: 16px;
+  font-size: 20px;
   background-color: grey;
   color: black;
   border-radius: 25px;
@@ -175,7 +175,7 @@ body {
   width: 100%;
 }
 
-.lyrics p {
+.landing p {
   white-space: normal;
   text-align: justify;
   width: 80%;

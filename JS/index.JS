@@ -48,6 +48,7 @@ function styling() {
     .val("")
     .attr("placeholder", "Search by Artist, or Song.");
   //no hover on mobile screns
+  //hover on .selection changes .albumartwork opacity
   if ($(window).width() >= 800) {
     $(".selection")
       .hover(
