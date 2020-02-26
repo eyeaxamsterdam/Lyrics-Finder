@@ -7,14 +7,12 @@
   border: 0;
 }
 
-
-
 html {
   padding-top: 45px;
   text-align: center;
   background: linear-gradient(to right, rgb(58, 58, 58), rgb(44, 34, 34));
   color: rgb(224, 224, 224);
-  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
 }
 
 h1 {
@@ -52,7 +50,8 @@ body {
   background: green;
 }
 
-.search-btn:hover, .search-btn:focus {
+.search-btn:hover,
+.search-btn:focus {
   color: white;
   cursor: pointer;
 }
@@ -73,15 +72,15 @@ body {
   max-width: 300px;
   border: 1px solid black;
   margin: 7px;
-  color: rgba(71, 255, 129, 0.616);
-  text-decoration: none;  
+  color: rgb(71, 255, 129);
+  text-decoration: none;
   border-radius: 20px;
 }
 
-.selection:hover, .selection:focus   {
+.selection:hover,
+.selection:focus {
   cursor: pointer;
   background-color: rgba(83, 38, 38, 0.493);
-  color: rgb(71, 255, 129);
 }
 
 .names {
@@ -99,7 +98,7 @@ body {
 
 .albumartwork {
   margin: 7px 0 7px 7px;
-  opacity: 60%;
+  opacity: 100%;
   border-radius: 20px;
   height: 100px;
 }
@@ -108,6 +107,7 @@ body {
   color: black;
   background-color: rgba(240, 128, 128, 0.281);
   font-size: 18px;
+  font-weight: bolder;
   text-decoration: none;
   border: 1px solid rgb(255, 255, 255);
   padding: 15px;
@@ -115,7 +115,8 @@ body {
   border-radius: 35px;
 }
 
-.backtotop:hover, .backtotop:focus {
+.backtotop:hover,
+.backtotop:focus {
   color: white;
 }
 
@@ -132,7 +133,7 @@ body {
 .backtoresults {
   text-decoration: none;
   font-size: 16px;
-  background-color:grey;
+  background-color: grey;
   color: black;
   border-radius: 25px;
   padding: 20px;
@@ -142,7 +143,6 @@ body {
 .backtoresults:hover {
   color: white;
 }
-
 
 .centerleft {
   margin: 20px auto;
@@ -156,7 +156,6 @@ body {
   width: 100%;
   margin: 40px 0;
 }
-
 
 .italics {
   font-style: italic;
@@ -172,17 +171,23 @@ body {
   color: red;
 }
 
-/* element below this on new line */
 .line-break {
   width: 100%;
 }
 
+.lyrics p {
+  white-space: normal;
+  text-align: justify;
+  width: 80%;
+  max-width: 600px;
+  margin: 0 auto;
+}
 
-/* opacity 100% for mobile */ 
-
-@media only screen and (max-width: 800px) {
+@media only screen and (min-width: 800px) {
   .albumartwork {
-    opacity: 100%;
+    opacity: 60%;
   }
-  
+  .selection {
+    color: rgba(71, 255, 129, 0.616);
+  }
 }

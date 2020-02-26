@@ -1,33 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Lyrics Finder</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-  <title>Lyrics Finder</title>
-  <link rel="stylesheet" href="style.css" />
-</head>
+  <body>
+    <header>
+      <h1>Lyrics Finder</h1>
+    </header>
+    <main>
+      <form class="search-song" action="#">
+        <input
+          type="search"
+          class="search-box"
+          placeholder="Search by Artist, or Song."
+          required
+          aria-label="Search by Artist, or Song"
+        />
+        <input
+          type="submit"
+          class="search-btn"
+          value="search"
+          aria-label="Search Button"
+        />
+      </form>
 
-<body>
-  <header>
-    <h1>Lyrics Finder</h1>
-  </header>
-  <main>
-
-    <form class="search-song" action="#">
-      <input type="search" class="search-box" placeholder="Search by Artist, or Song." required aria-label="Search by Artist, or Song">
-      <input type="submit" class="search-btn" value="search" aria-label="Search Button" />
-    </form>
-
-    <div id="target">
-      <ul class="search-results"></ul>
-    </div>
-    <div class="lyrics"></div>
-    <footer class="back-btn"></footer>
-
-  </main>
-  <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-  <script src="JS/index.JS"></script>
-</body>
+      <div id="target">
+        <!-- intro to the app -->
+        <ul class="search-results"></ul>
+      </div>
+      <div class="lyrics">
+        <p>Got a tune stuck in your head but aren't sure of the lyrics? Use
+            the search above to find a possible match. Then click the song you
+            are looking for!
+        </p>
+      </div>
+      <footer class="back-btn"></footer>
+    </main>
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <script src="JS/index.JS"></script>
+  </body>
 </html>
