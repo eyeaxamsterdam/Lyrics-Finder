@@ -22,10 +22,7 @@ function showLyrics(id) {
   .then( (myjson) => {
     let lyrics=myjson.result.lyrics;
     let artist=myjson.result.artist;
-    let track=myjson.result.track;
-    console.log(lyrics, myjson)
-
-  
+    let track=myjson.result.track;  
        $(".lyrics").html(
          `<h2><span class='italics'>${track} </span><br/><span class='thin'>By ${artist}</span></h2>
          <div class='centerleft'>${lyrics}</div>
@@ -40,7 +37,7 @@ function showLyrics(id) {
      })
      .catch((err) => {
        $(".lyrics")
-         .html(`<p class='api-error'>${err} for <span class='italics'>${songName}</span> by ${artistName}.</p>
+         .html(`<p class='api-error'>${err} for <span class='italics'>${track}</span> by ${artist}.</p>
          <p>Choose another selection, or try searching for something else.</p>`);
        $(".back-btn").html(`
          <a href='#target' class='backtoresults'>
