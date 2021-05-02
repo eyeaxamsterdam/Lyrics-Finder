@@ -11,44 +11,47 @@ function searchtrack(song) {
   );
 }
 
-function showLyrics() {
-  console.log(target);
-  // fetch(
-  //   `https://orion.apiseeds.com/api/music/lyric/${artistName}/${songName}?apikey=IMhMN29mkSHK4OfQsxWIUwylijoGFLTduAvZZH5uQR2IAfMVmsbTuXwhdyBuPmch`
-  // )
-  //   .then((response) => {
-  //     if (!response.ok) {
-  //       throw Error("Lyrics not found");
-  //     }
-  //     return response.json();
-  //   })
-  //   .then((myJson) => {
-  //     $(".lyrics").html(
-  //       `<h2><span class='italics'>${myJson.result.track.name} </span><br/><span class='thin'>By ${myJson.result.artist.name}</span></h2>
-  //       <div class='centerleft'>${myJson.result.track.text}</div>
-  //       <div class='back-btn'>
-  //         <a href='#target' class='backtoresults'>Back to previous results</a>
-  //       </div>`
-  //     );
-  //     $(".backtoresults").click(() => {
-  //       $(".search-results").show();
-  //       $(".lyrics").empty().hide();
-  //     });
-  //   })
-  //   .catch((err) => {
-  //     $(".lyrics")
-  //       .html(`<p class='api-error'>${err} for <span class='italics'>${songName}</span> by ${artistName}.</p>
-  //       <p>Choose another selection, or try searching for something else.</p>`);
-  //     $(".back-btn").html(`
-  //       <a href='#target' class='backtoresults'>
-  //         Back to previous results
-  //       </a>`);
-  //     $(".backtoresults").click(() => {
-  //       $(".search-results").show();
-  //       $(".lyrics").empty().hide();
-  //       $(".back-btn").empty();
-  //     });
-  //   });
+function showLyrics(id) {
+  console.log("Track ID = " + id.track);
+  console.log("Artist ID = " + id.artist);
+  console.log("Album ID = " + id.album);
+  fetch(
+    `https://api.happi.dev/v1/music/artists/${id.artist}/albums/${id.album}/tracks/${id.track}/lyrics?apikey=722a7e0IiwXrHHM0xoZGRyQ3CTshvgcZ1u4hakRbkOT4zdyqLU3mJD7z`
+  )
+  .then( (res) => !res.ok ? Error("Lyrics not found") : res.json())
+  .then( (myjson) => {
+    let lyrics=myjson.result.lyrics;
+    let artist=myjson.result.artist;
+    let track=myjson.result.track;
+    console.log(lyrics, myjson)
+
+  
+       $(".lyrics").html(
+         `<h2><span class='italics'>${track} </span><br/><span class='thin'>By ${artist}</span></h2>
+         <div class='centerleft'>${lyrics}</div>
+         <div class='back-btn'>
+           <a href='#target' class='backtoresults'>Back to previous results</a>
+         </div>`
+       );
+       $(".backtoresults").click(() => {
+         $(".search-results").show();
+         $(".lyrics").empty().hide();
+       });
+     })
+     .catch((err) => {
+       $(".lyrics")
+         .html(`<p class='api-error'>${err} for <span class='italics'>${songName}</span> by ${artistName}.</p>
+         <p>Choose another selection, or try searching for something else.</p>`);
+       $(".back-btn").html(`
+         <a href='#target' class='backtoresults'>
+           Back to previous results
+         </a>`);
+       $(".backtoresults").click(() => {
+         $(".search-results").show();
+         $(".lyrics").empty().hide();
+         $(".back-btn").empty();
+       });
+});
 }
 
  function checkTitles(data) {
@@ -66,19 +69,21 @@ function showLyrics() {
 function displayTitles(data) {
   console.log(data.result)
    for (let i = 0; i < data.result.length; i++) {
-     let artwork = data.result[i].cover;
-     let songName = data.result[i].track;
-     let artistName = data.result[i].artist;
-     let trackid = data.result[i].id_track
-     $(`
-     <li class='selection' tabindex='0'>
+     let result = data.result[i]
+     let artwork = result.cover;
+     let songName = result.track;
+     let artistName = result.artist;
+     let trackid = result.id_track;
+     let artistid = result.id_artist;
+     let albumid = result.id_album;
+    $(`
+     <li data-artist-id=${artistid} data-album-id=${albumid} id=${trackid} class='selection' tabindex='0'>
          <img class='albumartwork' src='${artwork}' alt='album artwork'>
          <div class='names'>
            <span class='song-name'>${songName}</span>
            <span class='artist-name'>${artistName}</span>
          </div>
        </li>`).appendTo(".search-results");
-       console.log(trackid);
    }
    styling();
  }
@@ -114,7 +119,12 @@ function checkForLyrics() {
     const artistName = $(this).find(".artist-name").text();
     const songName = $(this).find(".song-name").text();
     $(".search-results").hide();
-    showLyrics();
+    let trackid3 = {
+      track: this.id,
+      artist: this.getAttribute('data-artist-id'),
+      album: this.getAttribute('data-album-id')
+    }
+    showLyrics(trackid3);
   });
 }
 
