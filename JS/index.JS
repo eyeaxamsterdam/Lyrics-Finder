@@ -37,7 +37,7 @@ function showLyrics(id) {
      })
      .catch((err) => {
        $(".lyrics")
-         .html(`<p class='api-error'>${err} for <span class='italics'>${track}</span> by ${artist}.</p>
+         .html(`<p class='api-error'>${err} for <span class='italics'>shit</span> by piss.</p>
          <p>Choose another selection, or try searching for something else.</p>`);
        $(".back-btn").html(`
          <a href='#target' class='backtoresults'>
