@@ -2,42 +2,40 @@
 
 //event listener at bottom starts the app
 function searchtrack(song) {
-  fetch(`https://api.happi.dev/v1/music?q=${song}&limit=50`, { method: "GET", headers: { "x-happi-key" : "722a7e0IiwXrHHM0xoZGRyQ3CTshvgcZ1u4hakRbkOT4zdyqLU3mJD7z" } })
+  fetch(`https://itunes.apple.com/search?term=${song}&limit=50`)
     .then((res) => res.json())
     .then(checkTitles)
-    .catch((err) => alert("There seems to be something wrong with the database. Sorry, try another time! Error: " + err));
+    .catch((err) => { err;   $(".search-results").html(
+      `<h2 class='result-head'>Can't get any results for "${song}." Check spelling or try seatching for something else.</h2>`
+   )
+    }
+    )
    $(".search-results").html(
      `<h2 class='result-head'>Search results for '${song}'</h2>`
   );
 }
 
-function showLyrics(id) {
-  console.log("Track ID = " + id.track);
-  console.log("Artist ID = " + id.artist);
-  console.log("Album ID = " + id.album);
+function showLyrics(id, track, artist) {
   fetch(
-    `https://api.happi.dev/v1/music/artists/${id.artist}/albums/${id.album}/tracks/${id.track}/lyrics?apikey=722a7e0IiwXrHHM0xoZGRyQ3CTshvgcZ1u4hakRbkOT4zdyqLU3mJD7z`
+    `https://api.lyrics.ovh/v1/${id.artist}/${id.track}` 
   )
-  .then( (res) => !res.ok ? Error("Lyrics not found") : res.json())
-  .then( (myjson) => {
-    let lyrics=myjson.result.lyrics;
-    let artist=myjson.result.artist;
-    let track=myjson.result.track;  
+  .then( (res) => !res.status ? Error("Lyrics not found") : res.json())
+   .then( (lyrics) => {
        $(".lyrics").html(
-         `<h2><span class='italics'>${track} </span><br/><span class='thin'>By ${artist}</span></h2>
-         <div class='centerleft'>${lyrics}</div>
-         <div class='back-btn'>
-           <a href='#target' class='backtoresults'>Back to previous results</a>
-         </div>`
-       );
-       $(".backtoresults").click(() => {
-         $(".search-results").show();
-         $(".lyrics").empty().hide();
-       });
-     })
+          `<h2><span class='italics'>${track} </span><br/><span class='thin'>By ${artist}</span></h2>
+          <div class='centerleft'>${lyrics.lyrics ? lyrics.lyrics : `The lyrics to <span class='italics'>${track}</span> can't be found. Sorry! Try a different song.`}</div>
+          <div class='back-btn'>
+            <a href='#target' class='backtoresults'>Back to previous results</a>
+          </div>`
+        );
+        $(".backtoresults").click(() => {
+          $(".search-results").show();
+          $(".lyrics").empty().hide();
+        });
+      })
      .catch((err) => {
        $(".lyrics")
-         .html(`<p class='api-error'>${err} for <span class='italics'>shit</span> by piss.</p>
+         .html(`<p class='api-error'>${err} for <span class='italics'>${track}</span> by ${artist}.</p>
          <p>Choose another selection, or try searching for something else.</p>`);
        $(".back-btn").html(`
          <a href='#target' class='backtoresults'>
@@ -54,7 +52,7 @@ function showLyrics(id) {
  function checkTitles(data) {
    //show results again if 'backtoresults' button is clicked
    $(".search-results").show();
-   if (data.result.length) {
+   if (data.results.length) {
      displayTitles(data);
    } else {
      $(".search-results").append(
@@ -64,17 +62,13 @@ function showLyrics(id) {
  }
 
 function displayTitles(data) {
-  console.log(data.result)
-   for (let i = 0; i < data.result.length; i++) {
-     let result = data.result[i]
-     let artwork = result.cover;
-     let songName = result.track;
-     let artistName = result.artist;
-     let trackid = result.id_track;
-     let artistid = result.id_artist;
-     let albumid = result.id_album;
+   for (let i = 0; i < data.results.length; i++) {
+     let results = data.results[i]
+     let artwork = results.artworkUrl100;
+     let songName = results.trackName;
+     let artistName = results.artistName;
     $(`
-     <li data-artist-id=${artistid} data-album-id=${albumid} id=${trackid} class='selection' tabindex='0'>
+     <li data-artist=${artistName.split(' ').join('&')} id=${songName.split(' ').join('&')} class='selection' tabindex='0'>
          <img class='albumartwork' src='${artwork}' alt='album artwork'>
          <div class='names'>
            <span class='song-name'>${songName}</span>
@@ -116,12 +110,11 @@ function checkForLyrics() {
     const artistName = $(this).find(".artist-name").text();
     const songName = $(this).find(".song-name").text();
     $(".search-results").hide();
-    let trackid3 = {
+    let trackid2 = {
       track: this.id,
-      artist: this.getAttribute('data-artist-id'),
-      album: this.getAttribute('data-album-id')
+      artist: this.getAttribute('data-artist'),
     }
-    showLyrics(trackid3);
+    showLyrics(trackid2, songName, artistName);
   });
 }
 
