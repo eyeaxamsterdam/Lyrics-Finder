@@ -2,9 +2,7 @@
 
 //event listener at bottom starts the app
 function searchtrack(song) {
-  fetch(`http://itunes.apple.com/search?term=${song}&limit=50` , { 
-    headers: Access-Control-Allow-Origin: *
-  })
+  fetch(`https://itunes.apple.com/search?term=${song}&limit=50`)
     .then((res) => res.json())
     .then(checkTitles)
     .catch((err) => { err;   $(".search-results").html(
