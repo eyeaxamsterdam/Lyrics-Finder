@@ -2,10 +2,11 @@
 
 //event listener at bottom starts the app
 function searchtrack(song) {
-  fetch(`https://itunes.apple.com/search?term=${song}&limit=50`)
+  console.log(song)
+  fetch(` https://api.happi.dev/v1/music?q=${song}&limit=50&type=&lyrics=1` , { headers: {'x-happi-key': '722a7e0IiwXrHHM0xoZGRyQ3CTshvgcZ1u4hakRbkOT4zdyqLU3mJD7z' } } )
     .then((res) => res.json())
     .then(checkTitles)
-    .catch((err) => { err;   $(".search-results").html(
+    .catch((err) => { console.log(err);   $(".search-results").html(
       `<h2 class='result-head'>Can't get any results for "${song}." Check spelling or try seatching for something else.</h2>`
    )
     }
@@ -17,13 +18,13 @@ function searchtrack(song) {
 
 function showLyrics(id, track, artist) {
   fetch(
-    `https://api.lyrics.ovh/v1/${id.artist}/${id.track}` 
+    `https://api.happi.dev/v1/music/artists/${id.artist}/albums/${id.album}/tracks/${id.track}/lyrics` , { headers: {'x-happi-key': '722a7e0IiwXrHHM0xoZGRyQ3CTshvgcZ1u4hakRbkOT4zdyqLU3mJD7z' } } 
   )
   .then( (res) => !res.status ? Error("Lyrics not found") : res.json())
    .then( (lyrics) => {
        $(".lyrics").html(
           `<h2><span class='italics'>${track} </span><br/><span class='thin'>By ${artist}</span></h2>
-          <div class='centerleft'>${lyrics.lyrics ? lyrics.lyrics : `The lyrics to <span class='italics'>${track}</span> can't be found. Sorry! Try a different song.`}</div>
+          <div class='centerleft'>${lyrics.result.lyrics ? lyrics.result.lyrics : `The lyrics to <span class='italics'>${track}</span> can't be found. Sorry! Try a different song.`}</div>
           <div class='back-btn'>
             <a href='#target' class='backtoresults'>Back to previous results</a>
           </div>`
@@ -50,25 +51,23 @@ function showLyrics(id, track, artist) {
 }
 
  function checkTitles(data) {
+   console.log(data)
    //show results again if 'backtoresults' button is clicked
    $(".search-results").show();
-   if (data.results.length) {
-     displayTitles(data);
-   } else {
-     $(".search-results").append(
-       "<h3 class='red'>Can't find any results. <br/>Please check spelling and try again.</h3>"
-     );
+   data.result.length ? displayTitles(data) : 
+    $(".search-results").append
+    ("<h3 class='red'>Can't find any results. <br/>Please check spelling and try again.</h3>");
    }
- }
 
 function displayTitles(data) {
-   for (let i = 0; i < data.results.length; i++) {
-     let results = data.results[i]
-     let artwork = results.artworkUrl100;
-     let songName = results.trackName;
-     let artistName = results.artistName;
+   for (let i = 0; i < data.result.length; i++) {
+     let results = data.result[i]
+     let artwork = results.cover;
+     let songName = results.track;
+     let artistName = results.artist;
+     let id3 = { idArtist : results.id_artist, idTrack : results.id_track, idAlbum : results.id_album }
     $(`
-     <li data-artist=${artistName.split(' ').join('&')} id=${songName.split(' ').join('&')} class='selection' tabindex='0'>
+     <li data-artist=${id3.idArtist} data-album=${id3.idAlbum} id=${id3.idTrack} class='selection' tabindex='0'>
          <img class='albumartwork' src='${artwork}' alt='album artwork'>
          <div class='names'>
            <span class='song-name'>${songName}</span>
@@ -76,11 +75,11 @@ function displayTitles(data) {
          </div>
        </li>`).appendTo(".search-results");
    }
-   styling();
+   styling(data);
  }
 
-function styling() {
-  $(
+function styling(search) {
+  search.result.length >= 28 && $(
     `<div class='line-break'></div><a class='backtotop' href='#target'>Back to the top</a>`
   ).appendTo(".search-results");
   $(".search-box").val("").attr("placeholder", "Search by Artist, or Song.");
@@ -110,11 +109,12 @@ function checkForLyrics() {
     const artistName = $(this).find(".artist-name").text();
     const songName = $(this).find(".song-name").text();
     $(".search-results").hide();
-    let trackid2 = {
+    let happi_id = {
       track: this.id,
       artist: this.getAttribute('data-artist'),
+      album: this.getAttribute('data-album')
     }
-    showLyrics(trackid2, songName, artistName);
+    showLyrics(happi_id, songName, artistName);
   });
 }
 
